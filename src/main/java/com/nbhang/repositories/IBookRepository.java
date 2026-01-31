@@ -16,11 +16,11 @@ import java.util.List;
 
 @Repository
 public interface IBookRepository extends PagingAndSortingRepository<Book, Long>, JpaRepository<Book, Long> {
-    
+
     default List<Book> findAllBooks(Integer pageNo, Integer pageSize, String sortBy) {
         return findAll(PageRequest.of(pageNo, pageSize, Sort.by(sortBy))).getContent();
     }
-    
+
     List<Book> findByTitle(String title);
 
     List<Book> findByAuthor(String author);
@@ -28,7 +28,15 @@ public interface IBookRepository extends PagingAndSortingRepository<Book, Long>,
     List<Book> findByPrice(Double price);
 
     List<Book> findByCategory(Category category);
-    
-    //Thêm, sửa, xóa
-    // JpaRepository đã cung cấp các phương thức cơ bản: save, delete, findById, findAll, etc.
+
+    // Thêm, sửa, xóa
+    // JpaRepository đã cung cấp các phương thức cơ bản: save, delete, findById,
+    // findAll, etc.
+    @Query("""
+            SELECT b FROM Book b
+            WHERE b.title LIKE %?1%
+            OR b.author LIKE %?1%
+            OR b.category.name LIKE %?1%
+            """)
+    List<Book> searchBook(String keyword);
 }

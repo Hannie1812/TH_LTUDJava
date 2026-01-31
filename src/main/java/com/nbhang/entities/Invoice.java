@@ -46,4 +46,9 @@ public class Invoice {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ToString.Exclude
+    private User user;
 }

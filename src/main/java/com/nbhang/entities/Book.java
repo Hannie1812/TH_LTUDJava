@@ -1,4 +1,6 @@
 package com.nbhang.entities;
+
+import com.nbhang.validators.annotations.ValidCategoryId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -6,31 +8,39 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import com.nbhang.validators.annotations.ValidCategoryId;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
+@Entity
 @Table(name = "book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title", length = 50, nullable = false)
+    @Size(min = 1, max = 50, message = "Title must be between 1 and 50 characters")
+    @NotBlank(message = "Title must not be blank")
     private String title;
     @Column(name = "author", length = 50, nullable = false)
-    private String author;
+    @Size(min = 1, max = 50, message="Author must be between 1 and 50 characters")@NotBlank(message="Author must not be blank")private String author;
     @Column(name = "price")
+    @Positive(message = "Price must be greater than 0")
     private Double price;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @ValidCategoryId
     @ToString.Exclude
     private Category category;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<ItemInvoice> itemInvoices = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

@@ -20,8 +20,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
         @Bean
-        public UserDetailsService userDetailsService() {
-                return new UserService();
+        public UserDetailsService userDetailsService(UserService userService) {
+                return userService;
         }
 
         @Bean
@@ -30,18 +30,14 @@ public class SecurityConfig {
         }
 
         @Bean
-        public DaoAuthenticationProvider authenticationProvider() {
-                // Truyền trực tiếp userDetailsService() vào constructor
-                DaoAuthenticationProvider auth = new DaoAuthenticationProvider(userDetailsService());
-
-                // Thiết lập password encoder
+        public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
+                DaoAuthenticationProvider auth = new DaoAuthenticationProvider(userDetailsService);
                 auth.setPasswordEncoder(passwordEncoder());
-
                 return auth;
         }
 
         @Bean
-        public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http, UserDetailsService userDetailsService) throws Exception {
                 return http.authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/css/**", "/js/**", "/",
                                                 "/register", "/error")
@@ -68,7 +64,7 @@ public class SecurityConfig {
                                 .rememberMe(rememberMe -> rememberMe.key("hutech")
                                                 .rememberMeCookieName("hutech")
                                                 .tokenValiditySeconds(24 * 60 * 60)
-                                                .userDetailsService(userDetailsService()))
+                                                .userDetailsService(userDetailsService))
                                 .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedPage("/403"))
                                 .sessionManagement(sessionManagement -> sessionManagement.maximumSessions(1)
                                                 .expiredUrl("/login"))

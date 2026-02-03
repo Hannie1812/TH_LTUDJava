@@ -18,7 +18,7 @@
         <div class="card shadow-xl animate-slide-up">
           <div class="card-body p-5">
             <div class="text-center mb-4">
-              <div style="font-size: 4rem; margin-bottom: 1rem;">👤</div>
+              <div class="text-primary mb-3" style="font-size: 4rem;"><i class="bi bi-person-circle"></i></div>
               <h3 class="card-title">Thông Tin Cá Nhân</h3>
               <p class="text-secondary">Quản lý và cập nhật thông tin của bạn</p>
             </div>
@@ -33,7 +33,7 @@
             <form th:action="@{/profile}" method="post">
               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-              <h5 class="gradient-text mb-4">📋 Thông tin cơ bản</h5>
+              <h5 class="gradient-text mb-4"><i class="bi bi-card-list me-2"></i>Thông tin cơ bản</h5>
 
               <div class="form-group mb-3">
                 <label for="username" class="form-label fw-bold small">Tên đăng nhập</label>
@@ -59,7 +59,7 @@
               </div>
 
               <button type="submit" class="btn btn-primary w-100 shadow-sm">
-                💾 Lưu Thay Đổi
+                <i class="bi bi-save me-1"></i>Lưu Thay Đổi
               </button>
             </form>
 
@@ -68,7 +68,7 @@
             <form th:action="@{/profile/change-password}" method="post">
               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-              <h5 class="gradient-text mb-4">🔒 Thay đổi mật khẩu</h5>
+              <h5 class="gradient-text mb-4"><i class="bi bi-lock me-2"></i>Thay đổi mật khẩu</h5>
 
               <div class="form-group mb-3">
                 <label for="currentPassword" class="form-label fw-bold small">Mật khẩu hiện tại</label>
@@ -86,7 +86,7 @@
               </div>
 
               <button type="submit" class="btn btn-warning w-100 shadow-sm text-dark fw-bold">
-                🔑 Đổi Mật Khẩu
+                <i class="bi bi-key me-1"></i>Đổi Mật Khẩu
               </button>
             </form>
           </div>

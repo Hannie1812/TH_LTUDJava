@@ -6,12 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hệ Thống Quản Lý Sách - Hannie Book</title>
-  <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <th:block th:fragment="link-css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  </th:block>
   <link th:fragment="custom-css" rel="stylesheet" th:href="@{/css/style.css}" />
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -26,28 +30,28 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">🏠 Trang chủ</a>
+              <a class="nav-link active" aria-current="page" href="/"><i class="bi bi-house-door me-1"></i>Trang chủ</a>
             </li>
             <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-              <a class="nav-link" href="/books">📚 Sách</a>
+              <a class="nav-link" href="/books"><i class="bi bi-book me-1"></i>Sách</a>
             </li>
             <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
-              <a class="nav-link" href="/books/add">➕ Thêm</a>
+              <a class="nav-link" href="/books/add"><i class="bi bi-plus-circle me-1"></i>Thêm</a>
             </li>
             <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-              <a class="nav-link" href="/cart">🛒 Giỏ hàng</a>
+              <a class="nav-link" href="/cart"><i class="bi bi-cart me-1"></i>Giỏ hàng</a>
             </li>
             <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-              <a class="nav-link" href="/profile">👤 Cá nhân</a>
+              <a class="nav-link" href="/profile"><i class="bi bi-person me-1"></i>Cá nhân</a>
             </li>
             <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-              <a class="nav-link" href="/orders">📋 Đơn hàng</a>
+              <a class="nav-link" href="/orders"><i class="bi bi-list-check me-1"></i>Đơn hàng</a>
             </li>
             <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-              <a class="nav-link" href="/admin/users">👥 User</a>
+              <a class="nav-link" href="/admin/users"><i class="bi bi-people me-1"></i>User</a>
             </li>
             <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-              <a class="nav-link" href="/admin/orders">📦 Order</a>
+              <a class="nav-link" href="/admin/orders"><i class="bi bi-box me-1"></i>Order</a>
             </li>
           </ul>
 
@@ -63,7 +67,7 @@
               aria-label="Search" style="border-radius: 0; background: rgba(255,255,255,0.9);">
             <button class="btn btn-primary search-btn" type="submit"
               style="border-radius: 0 20px 20px 0; padding: 0.5rem 1.5rem;" title="Tìm kiếm">
-              🔍
+              <i class="bi bi-search"></i>
             </button>
           </form>
 
@@ -71,12 +75,13 @@
             <li sec:authorize="isAuthenticated()" class="nav-item">
               <form th:action="@{/logout}" method="post" class="d-inline">
                 <button class="btn btn-outline-danger ms-2" type="submit" title="Đăng xuất">
-                  🚪
+                  <i class="bi bi-box-arrow-right"></i>
                 </button>
               </form>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
-              <a class="btn btn-outline-primary" href="/login" title="Đăng nhập">🔑 Đăng nhập</a>
+              <a class="btn btn-outline-primary" href="/login" title="Đăng nhập"><i class="bi bi-key me-1"></i>Đăng
+                nhập</a>
             </li>
           </ul>
         </div>

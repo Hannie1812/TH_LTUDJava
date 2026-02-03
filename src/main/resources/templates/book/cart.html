@@ -37,19 +37,19 @@
                 <td>
                   <div class="input-group input-group-sm">
                     <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(this, -1)"
-                      th:attr="data-id=${item.getBookId()}">-</button>
+                      th:attr="data-id=${item.getBookId()}"><i class="bi bi-dash"></i></button>
                     <input type="number" min="1" th:value="${item.getQuantity()}" th:attr="data-id=${item.getBookId()}"
                       class="form-control text-center quantity" readonly />
                     <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(this, 1)"
-                      th:attr="data-id=${item.getBookId()}">+</button>
+                      th:attr="data-id=${item.getBookId()}"><i class="bi bi-plus"></i></button>
                   </div>
                 </td>
                 <td th:text="${item.getPrice() + ' VNĐ'}"></td>
                 <td class="fw-bold text-primary" th:text="${(item.getPrice() * item.getQuantity()) + ' VNĐ'}"></td>
                 <td class="text-center">
-                  <a class="btn btn-sm btn-outline-danger"
+                  <a class="btn btn-sm btn-outline-danger" title="Xóa"
                     th:href="@{/cart/removeFromCart/{id}(id=${item.getBookId()})}">
-                    Xóa
+                    <i class="bi bi-trash"></i>
                   </a>
                 </td>
               </tr>
@@ -63,17 +63,19 @@
           <h3 class="mb-0">Tổng cộng: <span class="text-primary" th:text="${totalPrice + ' VNĐ'}"></span></h3>
         </div>
         <div class="col-md-6 text-md-end">
-          <a class="btn btn-outline-danger me-2" th:href="@{/cart/clearCart}">Xóa giỏ hàng</a>
-          <a class="btn btn-success px-4 shadow-sm" th:href="@{/cart/checkout}">Thanh toán ngay</a>
+          <a class="btn btn-outline-danger me-2" th:href="@{/cart/clearCart}"><i class="bi bi-trash-fill me-1"></i>Xóa
+            sạch</a>
+          <a class="btn btn-success px-4 shadow-sm" th:href="@{/cart/checkout}"><i
+              class="bi bi-credit-card me-1"></i>Thanh toán</a>
         </div>
       </div>
     </div>
 
     <div th:if="${#lists.isEmpty(cart.cartItems)}" class="text-center py-5">
-      <div class="mb-4" style="font-size: 4rem;">🛒</div>
+      <div class="mb-4 text-muted" style="font-size: 4rem;"><i class="bi bi-cart-x"></i></div>
       <h3>Giỏ hàng của bạn đang trống</h3>
       <p class="text-muted mb-4">Hãy chọn những cuốn sách yêu thích của bạn và thêm vào giỏ hàng nhé!</p>
-      <a class="btn btn-primary px-4 shadow-sm" href="/books">Tiếp tục mua sắm</a>
+      <a class="btn btn-primary px-4 shadow-sm" href="/books"><i class="bi bi-arrow-right me-1"></i>Tiếp tục mua sắm</a>
     </div>
   </div>
 

@@ -13,7 +13,7 @@
 <div class="container mt-5">
   <div class="card shadow-lg animate-fade-in">
     <div class="card-body">
-      <h1 class="gradient-text mb-4 text-center">Thêm Sách Mới</h1>
+      <h1 class="gradient-text mb-4 text-center"><i class="bi bi-plus-circle me-2"></i>Thêm Sách Mới</h1>
       <form th:action="@{/books/add}" th:object="${book}" method="post" enctype="multipart/form-data">
         <div class="row">
           <div class="col-md-6 mb-3">
@@ -62,8 +62,9 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
-          <a th:href="@{/books}" class="text-decoration-none">← Quay lại danh sách</a>
-          <button type="submit" class="btn btn-primary px-5 shadow">Lưu Sách</button>
+          <a th:href="@{/books}" class="text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Quay lại danh
+            sách</a>
+          <button type="submit" class="btn btn-primary px-5 shadow"><i class="bi bi-save me-1"></i>Lưu Sách</button>
         </div>
       </form>
     </div>

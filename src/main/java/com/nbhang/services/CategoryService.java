@@ -15,6 +15,12 @@ import java.util.Optional;
 public class CategoryService {
     private final ICategoryRepository categoryRepository;
 
+    
+    // Xóa danh mục theo ID
+    public void findById(Long id) {
+        categoryRepository.findById(id);
+    }
+
     // Lấy danh sách tất cả các danh mục
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();

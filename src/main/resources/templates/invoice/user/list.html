@@ -30,17 +30,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="order : ${orders}">
-                            <td class="ps-4 fw-bold" th:text="'#' + ${order.id}"></td>
-                            <td
+                        <tr th:each="order : ${orders}" class="border-bottom-0">
+                            <td class="ps-4 py-3 fw-bold" th:text="'#' + ${order.id}"></td>
+                            <td class="py-3"
                                 th:text="${order.invoiceDate != null ? #dates.format(order.invoiceDate, 'dd/MM/yyyy HH:mm') : '---'}">
                             </td>
-                            <td>
+                            <td class="py-3">
                                 <div class="text-truncate" style="max-width: 250px;" th:text="${order.shippingAddress}"
                                     th:title="${order.shippingAddress}"></div>
                             </td>
-                            <td class="fw-bold text-primary" th:text="${(order.price ?: 0) + ' VNĐ'}"></td>
-                            <td>
+                            <td class="py-3 fw-bold text-primary"
+                                th:text="${#numbers.formatDecimal(order.price ?: 0, 0, 'COMMA', 0, 'POINT') + ' đ'}">
+                            </td>
+                            <td class="py-3">
                                 <div th:switch="${order.status}">
                                     <span th:case="'Mới đặt'" class="badge rounded-pill bg-info text-dark px-3 py-2">Mới
                                         đặt</span>
@@ -54,7 +56,7 @@
                                         th:text="${order.status}"></span>
                                 </div>
                             </td>
-                            <td class="text-end pe-4">
+                            <td class="text-end pe-4 py-3">
                                 <a th:href="@{/orders/{id}(id=${order.id})}"
                                     class="btn btn-sm btn-outline-primary shadow-sm">
                                     <i class="bi bi-info-circle me-1"></i>Chi tiết

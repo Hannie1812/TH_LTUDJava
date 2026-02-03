@@ -29,7 +29,7 @@
         .stepper-item::before {
             position: absolute;
             content: "";
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid #edf2f7;
             width: 100%;
             top: 20px;
             left: -50%;
@@ -49,9 +49,9 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #e2e8f0;
+            background: #edf2f7;
             margin-bottom: 8px;
-            color: #718096;
+            color: #a0aec0;
             font-weight: bold;
             transition: all 0.3s ease;
             border: 2px solid transparent;
@@ -199,16 +199,16 @@
                             </thead>
                             <tbody>
                                 <tr th:each="item : ${invoice.itemInvoices}">
-                                    <td class="ps-4">
-                                        <div class="fw-bold" th:text="${item.book.title}"></div>
+                                    <td class="ps-4 py-3">
+                                        <div class="fw-bold text-dark" th:text="${item.book.title}"></div>
                                         <small class="text-muted" th:text="${item.book.author}"></small>
                                     </td>
-                                    <td class="text-center fw-bold" th:text="${item.quantity}"></td>
-                                    <td class="text-end"
-                                        th:text="${#numbers.formatDecimal(item.book.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}">
+                                    <td class="text-center fw-bold py-3" th:text="${item.quantity}"></td>
+                                    <td class="text-end py-3"
+                                        th:text="${#numbers.formatDecimal(item.book.price, 0, 'COMMA', 0, 'POINT') + ' đ'}">
                                     </td>
                                     <td class="text-end pe-4 fw-bold text-primary"
-                                        th:text="${#numbers.formatDecimal(item.book.price * item.quantity, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}">
+                                        th:text="${#numbers.formatDecimal(item.book.price * item.quantity, 0, 'COMMA', 0, 'POINT') + ' đ'}">
                                     </td>
                                 </tr>
                             </tbody>
@@ -216,7 +216,7 @@
                                 <tr>
                                     <td colspan="3" class="ps-4 fw-bold fs-5">Tổng cộng</td>
                                     <td class="text-end pe-4 fw-bold text-danger fs-5"
-                                        th:text="${#numbers.formatDecimal(invoice.price, 0, 'COMMA', 0, 'POINT') + ' VNĐ'}">
+                                        th:text="${#numbers.formatDecimal(invoice.price, 0, 'COMMA', 0, 'POINT') + ' đ'}">
                                     </td>
                                 </tr>
                             </tfoot>

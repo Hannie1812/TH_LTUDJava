@@ -49,25 +49,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="order : ${orders}">
-                            <td class="ps-4 fw-bold" th:text="'#' + ${order.id}"></td>
-                            <td>
+                        <tr th:each="order : ${orders}" class="border-bottom-0">
+                            <td class="ps-4 py-3 fw-bold" th:text="'#' + ${order.id}"></td>
+                            <td class="py-3">
                                 <div th:if="${order.user != null}">
-                                    <div class="fw-bold" th:text="${order.user.username}"></div>
+                                    <div class="fw-bold text-dark" th:text="${order.user.username}"></div>
                                     <small class="text-muted" th:text="${order.user.email}"></small>
                                 </div>
                                 <div th:if="${order.user == null}" class="text-muted small italic">Khách vãng lai</div>
                             </td>
-                            <td
+                            <td class="py-3"
                                 th:text="${order.invoiceDate != null ? #dates.format(order.invoiceDate, 'dd/MM/yyyy HH:mm') : '---'}">
                             </td>
-                            <td>
+                            <td class="py-3">
                                 <div class="text-truncate" style="max-width: 150px;" th:text="${order.shippingAddress}"
                                     th:title="${order.shippingAddress}"></div>
                             </td>
-                            <td class="fw-bold text-primary"
-                                th:text="${#numbers.formatDecimal(order.price ?: 0, 0, 'COMMA', 0, 'POINT')}"></td>
-                            <td>
+                            <td class="py-3 fw-bold text-primary"
+                                th:text="${#numbers.formatDecimal(order.price ?: 0, 0, 'COMMA', 0, 'POINT') + ' đ'}">
+                            </td>
+                            <td class="py-3">
                                 <div th:switch="${order.status}">
                                     <span th:case="'Mới đặt'" class="badge rounded-pill bg-info text-dark px-3 py-2">Mới
                                         đặt</span>
@@ -81,7 +82,7 @@
                                         th:text="${order.status}"></span>
                                 </div>
                             </td>
-                            <td class="text-end pe-4">
+                            <td class="text-end pe-4 py-3">
                                 <div class="d-flex gap-2 justify-content-end align-items-center">
                                     <a th:href="@{/admin/orders/{id}(id=${order.id})}"
                                         class="btn btn-sm btn-outline-info shadow-sm" title="Xem chi tiết">
@@ -89,20 +90,19 @@
                                     </a>
                                     <form th:action="@{/admin/orders/update-status/{id}(id=${order.id})}" method="post"
                                         class="d-flex gap-2 mb-0">
-                                        <select name="status" class="form-select form-select-sm" style="width: auto;">
+                                        <select name="status" class="form-select form-select-sm shadow-sm"
+                                            style="width: auto; font-size: 0.85rem;">
                                             <option value="Mới đặt" th:selected="${order.status == 'Mới đặt'}">Mới đặt
                                             </option>
                                             <option value="Đã đóng gói" th:selected="${order.status == 'Đã đóng gói'}">
-                                                Đã
-                                                đóng gói</option>
+                                                Đã đóng gói</option>
                                             <option value="Đang giao hàng"
                                                 th:selected="${order.status == 'Đang giao hàng'}">Đang giao hàng
                                             </option>
                                             <option value="Đã giao hàng"
-                                                th:selected="${order.status == 'Đã giao hàng'}">Đã
-                                                giao hàng</option>
+                                                th:selected="${order.status == 'Đã giao hàng'}">Đã giao hàng</option>
                                         </select>
-                                        <button type="submit" class="btn btn-sm btn-primary">
+                                        <button type="submit" class="btn btn-sm btn-primary shadow-sm px-3">
                                             <i class="bi bi-save me-1"></i>Lưu
                                         </button>
                                     </form>

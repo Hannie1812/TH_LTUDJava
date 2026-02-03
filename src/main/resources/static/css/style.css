@@ -140,6 +140,17 @@ footer,
     transform: translateY(-2px);
 }
 
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    transition: transform var(--transition-fast);
+}
+
+.navbar-brand:hover .navbar-logo {
+    transform: scale(1.05);
+}
+
 .navbar .btn-outline-danger {
     color: #000000 !important;
     border-color: #000000 !important;

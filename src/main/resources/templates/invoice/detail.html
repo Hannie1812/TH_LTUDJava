@@ -8,6 +8,95 @@
     <title>Chi Tiết Đơn Hàng - Hannie Book</title>
     <link th:replace="~{layout::link-css}" />
     <link th:replace="~{layout::custom-css}" />
+    <style>
+        /* Status Stepper Styles */
+        .stepper-wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .stepper-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            z-index: 2;
+        }
+
+        .stepper-item::before {
+            position: absolute;
+            content: "";
+            border-bottom: 2px solid #e2e8f0;
+            width: 100%;
+            top: 20px;
+            left: -50%;
+            z-index: 1;
+        }
+
+        .stepper-item:first-child::before {
+            content: none;
+        }
+
+        .stepper-item .step-counter {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin-bottom: 8px;
+            color: #718096;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stepper-item.active .step-counter {
+            background-color: var(--primary-color);
+            color: #000;
+            box-shadow: 0 0 15px rgba(135, 206, 235, 0.4);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .stepper-item.completed .step-counter {
+            background-color: #48bb78;
+            color: white;
+        }
+
+        .stepper-item.completed::before {
+            border-color: #48bb78;
+        }
+
+        .stepper-item .step-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #718096;
+            text-align: center;
+        }
+
+        .stepper-item.active .step-name {
+            color: #000;
+            font-weight: 700;
+        }
+
+        .info-label {
+            color: #718096;
+            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: #000;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,23 +107,55 @@
             <h1 class="gradient-text mb-0"><i class="bi bi-info-circle me-2"></i>Chi Tiết Đơn Hàng <small
                     class="text-muted" th:text="'#' + ${invoice.id}"></small></h1>
             <a th:href="${#authorization.expression('hasAuthority(''ADMIN'')') ? '/admin/orders' : '/orders'}"
-                class="btn btn-outline-primary">
+                class="btn btn-outline-primary shadow-sm">
                 <i class="bi bi-arrow-left me-1"></i>Quay lại
             </a>
+        </div>
+
+        <!-- Status Stepper -->
+        <div class="glass-card mb-4 py-4 px-3">
+            <div class="stepper-wrapper">
+                <div class="stepper-item" th:classappend="${invoice.status == 'Mới đặt' ? 'active' : 'completed'}">
+                    <div class="step-counter"><i
+                            th:class="${invoice.status == 'Mới đặt' ? 'bi bi-dot' : 'bi bi-check'}"></i></div>
+                    <div class="step-name">Mới đặt</div>
+                </div>
+                <div class="stepper-item"
+                    th:classappend="${invoice.status == 'Đã đóng gói' ? 'active' : (invoice.status == 'Đang giao hàng' or invoice.status == 'Đã giao hàng' ? 'completed' : '')}">
+                    <div class="step-counter"><i
+                            th:class="${invoice.status == 'Đã đóng gói' ? 'bi bi-dot' : (invoice.status == 'Đang giao hàng' or invoice.status == 'Đã giao hàng' ? 'bi bi-check' : 'bi bi-box')}"></i>
+                    </div>
+                    <div class="step-name">Đã đóng gói</div>
+                </div>
+                <div class="stepper-item"
+                    th:classappend="${invoice.status == 'Đang giao hàng' ? 'active' : (invoice.status == 'Đã giao hàng' ? 'completed' : '')}">
+                    <div class="step-counter"><i
+                            th:class="${invoice.status == 'Đang giao hàng' ? 'bi bi-dot' : (invoice.status == 'Đã giao hàng' ? 'bi bi-check' : 'bi bi-truck')}"></i>
+                    </div>
+                    <div class="step-name">Đang giao</div>
+                </div>
+                <div class="stepper-item"
+                    th:classappend="${invoice.status == 'Đã giao hàng' ? 'active completed' : ''}">
+                    <div class="step-counter"><i
+                            th:class="${invoice.status == 'Đã giao hàng' ? 'bi bi-check-all' : 'bi bi-house-check')}"></i>
+                    </div>
+                    <div class="step-name">Hoàn thành</div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
             <!-- Order Summary Card -->
             <div class="col-lg-4 mb-4">
                 <div class="glass-card shadow-sm h-100">
-                    <h5 class="fw-bold mb-4"><i class="bi bi-card-list me-2"></i>Thông tin chung</h5>
+                    <h5 class="fw-bold mb-4 border-bottom pb-2"><i class="bi bi-card-list me-2"></i>Thông tin chung</h5>
                     <div class="mb-3">
-                        <label class="text-muted small d-block">Ngày đặt hàng</label>
-                        <span class="fw-bold"
-                            th:text="${#dates.format(invoice.invoiceDate, 'dd/MM/yyyy HH:mm')}"></span>
+                        <div class="info-label">Ngày đặt hàng</div>
+                        <div class="info-value" th:text="${#dates.format(invoice.invoiceDate, 'dd/MM/yyyy HH:mm')}">
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label class="text-muted small d-block">Trạng thái</label>
+                        <div class="info-label">Trạng thái</div>
                         <div th:switch="${invoice.status}">
                             <span th:case="'Mới đặt'" class="badge rounded-pill bg-info text-dark px-3 py-2">Mới
                                 đặt</span>
@@ -49,13 +170,13 @@
                         </div>
                     </div>
                     <div class="mb-3" th:if="${invoice.user != null}">
-                        <label class="text-muted small d-block">Khách hàng</label>
-                        <span class="fw-bold d-block" th:text="${invoice.user.username}"></span>
-                        <span class="text-muted small" th:text="${invoice.user.email}"></span>
+                        <div class="info-label">Khách hàng</div>
+                        <div class="info-value" th:text="${invoice.user.username}"></div>
+                        <div class="text-muted small" th:text="${invoice.user.email}"></div>
                     </div>
                     <div class="mb-0">
-                        <label class="text-muted small d-block">Địa chỉ giao hàng</label>
-                        <p class="mb-0 fw-500" th:text="${invoice.shippingAddress}"></p>
+                        <div class="info-label">Địa chỉ giao hàng</div>
+                        <div class="info-value" style="font-weight: 500;" th:text="${invoice.shippingAddress}"></div>
                     </div>
                 </div>
             </div>

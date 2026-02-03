@@ -63,15 +63,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> userRoles = this.getRoles();
         return userRoles.stream()
-                .map(role -> {
-                    String name = role.getName();
-                    if (name == null) return null;
-                    if (!name.startsWith("ROLE_")) {
-                        name = "ROLE_" + name;
-                    }
-                    return new SimpleGrantedAuthority(name);
-                })
-                .filter(java.util.Objects::nonNull)
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .toList();
     }
 

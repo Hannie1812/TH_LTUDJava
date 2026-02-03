@@ -1,27 +1,37 @@
-# TODO: Add Quantity Column for Books and Admin Alerts
+# TODO: Implement User Profile Management and Admin User Management
 
-## Step 1: Add Quantity Field to Book Entity
-- Add `quantity` field to `Book.java` entity with appropriate annotations.
+## Step 1: Update UserService.java
+- [x] Add methods: updateUser, changePassword, findAllUsers, deleteUser, assignRole, removeRole.
 
-## Step 2: Update BookService
-- Modify `BookService.java` to handle quantity updates.
+## Step 2: Update IUserRepository.java
+- [x] Add findAll method if not present (already extends JpaRepository).
 
-## Step 3: Update BookController
-- Modify `BookController.java` to include quantity in add/edit forms.
+## Step 3: Update UserController.java
+- [x] Add /profile GET/POST endpoints for user profile management.
+- [x] Add /admin/users GET endpoint for user list.
+- [x] Add /admin/users/edit/{id} GET/POST for editing user.
+- [x] Add /admin/users/delete/{id} POST for deleting user.
+- [x] Add /admin/users/add GET/POST for creating user.
 
-## Step 4: Update Templates
-- Update `add.html` and `edit.html` to include quantity input field.
-- Update `list.html` to display quantity column.
+## Step 4: Update SecurityConfig.java
+- [x] Add authorization for /profile (USER, ADMIN).
+- [x] Add authorization for /admin/users/** (ADMIN).
 
-## Step 5: Update View Models
-- Update `BookGetVm.java` and `BookPostVm.java` to include quantity.
+## Step 5: Create user/profile.html template
+- [x] Form for editing user info and changing password.
 
-## Step 6: Modify CartService for Quantity Deduction
-- Update `CartService.java` to deduct quantity from book stock on checkout.
+## Step 6: Create user/admin/list.html template
+- [x] Table listing all users with edit/delete links.
 
-## Step 7: Add Admin Alert on Login
-- Modify `HomeController.java` or create a service to check low stock and alert admin on login.
-- Update `index.html` to display alerts.
+## Step 7: Create user/admin/edit.html template
+- [x] Form for editing user details and roles.
 
-## Step 8: Update Repository if Needed
-- Check if `IBookRepository.java` needs updates for quantity queries.
+## Step 8: Create user/admin/add.html template
+- [x] Form for adding new user.
+
+## Step 9: Update layout.html
+- [x] Add Profile link for logged-in users.
+- [x] Add Admin Users link for ADMIN role.
+
+## Step 10: Test the features
+- Run application, test as USER and ADMIN.

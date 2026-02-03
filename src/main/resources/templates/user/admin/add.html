@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add User</title>
+    <th:block th:replace="~{layout :: link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+  </head>
+  <body>
+    <th:block th:replace="~{layout :: header}"></th:block>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-6 col-md-8">
+          <div class="card shadow">
+            <div class="card-body p-5">
+              <h3 class="card-title text-center mb-4">Add New User</h3>
+
+              <div th:if="${errors}" class="alert alert-danger">
+                <ul>
+                  <li th:each="error : ${errors}" th:text="${error}"></li>
+                </ul>
+              </div>
+
+              <form th:action="@{/admin/users/add}" method="post" th:object="${user}">
+                <div class="form-group mb-3">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control" id="username" name="username" required />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" required />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="phone">Phone</label>
+                  <input type="text" class="form-control" id="phone" name="phone" required />
+                </div>
+                <div class="d-flex justify-content-between">
+                  <a href="/admin/users" class="btn btn-secondary">Cancel</a>
+                  <button type="submit" class="btn btn-primary">Add User</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <th:block th:replace="~{layout :: footer}"></th:block>
+  </body>
+</html>

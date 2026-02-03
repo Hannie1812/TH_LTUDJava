@@ -52,7 +52,7 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
                 return http
-                                .authorizeHttpRequests(auth -> auth
+                .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/css/**", "/js/**", "/",
                                                                 "/oauth/**", "/register", "/error")
                                                 .permitAll()
@@ -63,8 +63,10 @@ public class SecurityConfig {
                                                 .hasAnyAuthority("ADMIN", "USER")
                                                 .requestMatchers("/api/**")
                                                 .hasAnyAuthority("ADMIN", "USER")
-                                                .requestMatchers("/api/**")
+                                                .requestMatchers("/profile", "/profile/**")
                                                 .hasAnyAuthority("ADMIN", "USER")
+                                                .requestMatchers("/admin/**")
+                                                .hasAnyAuthority("ADMIN")
                                                 .anyRequest().authenticated())
                                 .logout(logout -> logout
                                                 .logoutUrl("/logout")

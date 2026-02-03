@@ -4,23 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initialscale=1.0">
-    <title>ỨNG DỤNG QUẢN LÝ SÁCH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management System - HUTECH</title>
     <th:block th:replace="~{layout::link-css}"></th:block>
     <th:block th:replace="~{layout::custom-css}"></th:block>
 </head>
 
 <body>
     <th:block th:replace="~{layout::header}"></th:block>
-    <div class="container">
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    TRANG CHỦ ỨNG DỤNG QUẢN LÝ SÁCH - KẾT NỐI CSDL MYSQL
-                </a>
-            </div>
-        </nav>
+
+    <!-- Hero Section -->
+    <div class="container mt-4">
+        <div class="hero-section animate-fade-in">
+            <h1 class="hero-title">📚 Hệ Thống Quản Lý Sách</h1>
+            <p class="hero-subtitle">Quản lý thư viện sách hiện đại và chuyên nghiệp</p>
+            <p class="hero-subtitle" style="font-size: 1rem; margin-top: 1rem;">
+                Kết nối với MySQL Database - HUTECH University
+            </p>
+        </div>
     </div>
+
+    <!-- Features Section -->
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📖</div>
+                        <h5 class="card-title">Quản Lý Sách</h5>
+                        <p class="text-secondary">Thêm, sửa, xóa và tìm kiếm sách dễ dàng</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+                        <h5 class="card-title">Quản Lý Người Dùng</h5>
+                        <p class="text-secondary">Phân quyền và quản lý tài khoản</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card animate-slide-up" style="animation-delay: 0.3s;">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🛒</div>
+                        <h5 class="card-title">Giỏ Hàng</h5>
+                        <p class="text-secondary">Mượn sách và theo dõi đơn hàng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats or Info -->
+    <div class="container mb-5">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="gradient-text" style="font-size: 1.5rem; margin-bottom: 1rem;">
+                    Chào mừng đến với hệ thống quản lý sách HUTECH
+                </h5>
+                <p class="text-secondary mb-0">
+                    Đăng nhập để trải nghiệm đầy đủ tính năng của hệ thống
+                </p>
+            </div>
+        </div>
+    </div>
+
     <th:block th:replace="~{layout::footer}"></th:block>
 </body>
 

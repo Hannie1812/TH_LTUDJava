@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
@@ -80,5 +82,37 @@ public class UserService implements UserDetailsService {
                 .credentialsExpired(false)
                 .disabled(false)
                 .build();
+    }
+
+    public java.util.Optional<User> findById(@NotNull Long id) {
+        return userRepository.findById(id);
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Transactional
+    public void updateUser(@NotNull User user) {
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(@NotNull Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void changePassword(@NotNull String username, @NotNull String currentPassword, @NotNull String newPassword) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(currentPassword, user.getPassword())) {
+            throw new RuntimeException("Current password is incorrect");
+        }
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
     }
 }

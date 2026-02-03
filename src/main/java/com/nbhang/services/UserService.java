@@ -36,15 +36,24 @@ public class UserService implements UserDetailsService {
     }
 
     public void saveOauthUser(String email, @NotNull String username) {
-        if (userRepository.findByUsername(username)!= null)
+        log.info("Attempting to save OAuth user with email: {}", email);
+        if (userRepository.findByEmail(email) != null) {
+            log.info("User with email {} already exists", email);
             return;
-        var user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(new BCryptPasswordEncoder().encode(username));
-        user.setProvider(Provider.GOOGLE.value);
-        user.getRoles().add(roleRepository.findRoleById(Role.USER.value));
-        userRepository.save(user);
+        }
+        try {
+            var user = new User();
+            user.setUsername(email);
+            user.setEmail(email);
+            user.setPassword(new BCryptPasswordEncoder().encode(email));
+            user.setProvider(Provider.GOOGLE.value);
+            user.getRoles().add(roleRepository.findRoleById(Role.USER.value));
+            userRepository.save(user);
+            log.info("Successfully saved OAuth user with email: {}", email);
+        } catch (Exception e) {
+            log.error("Error saving OAuth user with email: {}", email, e);
+            throw e;
+        }
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = { Exception.class, Throwable.class })
@@ -59,6 +68,9 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
         var user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())

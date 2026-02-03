@@ -86,24 +86,29 @@ public class SecurityConfig {
                                                                 .successHandler(
                                                                                 (request, response,
                                                                                                 authentication) -> {
-                                                                                        var oidcUser = (DefaultOidcUser) authentication
-                                                                                                        .getPrincipal();
-                                                                                        log.info("Google OAuth login attempt for email: {}", oidcUser.getEmail());
-                                                                                        userService.saveOauthUser(
-                                                                                                        oidcUser.getEmail(),
-                                                                                                        oidcUser.getName());
-                                                                                        // Load user by email để đảm bảo lấy đúng user vừa tạo
-                                                                                        var userDetails = userService.loadUserByUsername(oidcUser.getEmail());
-                                                                                        log.info("Loaded user authorities: {}", userDetails.getAuthorities());
-                                                                                        var authToken = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
-                                                                                                        userDetails,
-                                                                                                        null,
-                                                                                                        userDetails.getAuthorities());
-                                                                                        org.springframework.security.core.context.SecurityContextHolder
-                                                                                                        .getContext()
-                                                                                                        .setAuthentication(
-                                                                                                                        authToken);
-                                                                                        response.sendRedirect("/");
+                                                                                        try {
+                                                                                                var oidcUser = (DefaultOidcUser) authentication
+                                                                                                                .getPrincipal();
+                                                                                                log.info("Google OAuth login attempt for email: {}", oidcUser.getEmail());
+                                                                                                userService.saveOauthUser(
+                                                                                                                oidcUser.getEmail(),
+                                                                                                                oidcUser.getName());
+                                                                                                // Load user by email để đảm bảo lấy đúng user vừa tạo
+                                                                                                var userDetails = userService.loadUserByUsername(oidcUser.getEmail());
+                                                                                                log.info("Loaded user authorities: {}", userDetails.getAuthorities());
+                                                                                                var authToken = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                                                                                                                userDetails,
+                                                                                                                null,
+                                                                                                                userDetails.getAuthorities());
+                                                                                                org.springframework.security.core.context.SecurityContextHolder
+                                                                                                                .getContext()
+                                                                                                                .setAuthentication(
+                                                                                                                                authToken);
+                                                                                                response.sendRedirect("/");
+                                                                                        } catch (Exception e) {
+                                                                                                log.error("Error during OAuth2 login", e);
+                                                                                                response.sendRedirect("/login?error=oauth2");
+                                                                                        }
                                                                                 })
                                                                 .permitAll())
                                 .rememberMe(rememberMe -> rememberMe

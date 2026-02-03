@@ -63,6 +63,8 @@ public class SecurityConfig {
                                                 .hasAnyAuthority("ADMIN", "USER")
                                                 .requestMatchers("/api/**")
                                                 .hasAnyAuthority("ADMIN", "USER")
+                                                .requestMatchers("/api/**")
+                                                .hasAnyAuthority("ADMIN", "USER")
                                                 .anyRequest().authenticated())
                                 .logout(logout -> logout
                                                 .logoutUrl("/logout")

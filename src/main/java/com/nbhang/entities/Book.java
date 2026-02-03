@@ -33,6 +33,9 @@ public class Book {
     @Column(name = "price")
     @Positive(message = "Price must be greater than 0")
     private Double price;
+    @Column(name = "quantity")
+    @Positive(message = "Quantity must be greater than 0")
+    private Integer quantity;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ValidCategoryId

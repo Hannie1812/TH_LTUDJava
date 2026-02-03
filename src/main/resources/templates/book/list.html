@@ -65,6 +65,12 @@
             </th>
             <th>
               <a
+                th:href="@{/books(pageNo=${currentPage}, sortBy= 'quantity')}"
+                >Quantity</a
+              >
+            </th>
+            <th>
+              <a
                 th:href="@{/books(pageNo=${currentPage}, sortBy= 'category')}"
                 >Category</a
               >
@@ -73,13 +79,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="book : ${books}">
+          <tr th:each="book : ${books}" th:classappend="${book.getQuantity() < 10} ? 'table-warning'">
             <td th:text="${book.getId()}"></td>
             <td th:text="${book.getTitle()}"></td>
             <td th:text="${book.getAuthor()}"></td>
             <td th:text="${book.getPrice()}"></td>
+            <td th:text="${book.getQuantity()}">
+              <span th:if="${book.getQuantity() < 10 and #authorization.expression('hasAnyAuthority(''ADMIN'')')}" class="text-danger">Low Stock!</span>
+            </td>
             <td th:text="${book.getCategory().getName()}"></td>
-            <td colspan="2">
+            <td>
               <a
                 class="btn btn-primary"
                 sec:authorize="hasAnyAuthority('ADMIN')"

@@ -67,9 +67,13 @@ public class CartService {
             var items = new ItemInvoice();
             items.setInvoice(invoice);
             items.setQuantity(item.getQuantity());
-            items.setBook(bookRepository.findById(item.getBookId())
-                    .orElseThrow());
+            var book = bookRepository.findById(item.getBookId())
+                    .orElseThrow();
+            items.setBook(book);
             itemInvoiceRepository.save(items);
+            // Update book quantity
+            book.setQuantity(book.getQuantity() - item.getQuantity());
+            bookRepository.save(book);
         });
         removeCart(session);
     }

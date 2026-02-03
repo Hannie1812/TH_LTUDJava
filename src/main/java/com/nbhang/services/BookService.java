@@ -51,6 +51,7 @@ public class BookService {
         Objects.requireNonNull(existingBook).setTitle(book.getTitle());
         existingBook.setAuthor(book.getAuthor());
         existingBook.setPrice(book.getPrice());
+        existingBook.setQuantity(book.getQuantity());
         existingBook.setCategory(book.getCategory());
         bookRepository.save(existingBook);
     }

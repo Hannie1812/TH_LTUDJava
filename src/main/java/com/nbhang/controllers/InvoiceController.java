@@ -19,7 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class InvoiceController {
-    private final InvoiceService invoiceService;
+    private final com.nbhang.services.InvoiceService invoiceService;
+    private final com.nbhang.services.FileStorageService fileStorageService;
     private final UserService userService;
 
     // User viewing their own orders
@@ -107,5 +108,19 @@ public class InvoiceController {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
         model.addAttribute("invoice", invoice);
         return "invoice/detail";
+    }
+
+    @PostMapping("/invoices/{id}/upload-proof")
+    public String uploadProof(@PathVariable("id") Long id,
+            @RequestParam("file") org.springframework.web.multipart.MultipartFile file,
+            RedirectAttributes redirectAttributes) {
+        try {
+            String fileName = fileStorageService.storeInvoiceProof(file, id);
+            invoiceService.updatePaymentProof(id, fileName);
+            redirectAttributes.addFlashAttribute("successMessage", "Tải lên ảnh minh chứng thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tải lên thất bại: " + e.getMessage());
+        }
+        return "redirect:/orders/" + id;
     }
 }

@@ -68,16 +68,18 @@ public class CartService {
                 .sum();
     }
 
-    public void saveCart(@NotNull HttpSession session, com.nbhang.entities.User user, String shippingAddress) {
+    public Invoice saveCart(@NotNull HttpSession session, com.nbhang.entities.User user, String shippingAddress,
+            String paymentMethod) {
         var cart = getCart(session);
         if (cart.getCartItems().isEmpty())
-            return;
+            return null;
         var invoice = new Invoice();
         invoice.setInvoiceDate(new Date());
         invoice.setPrice(getSumPrice(session));
         invoice.setUser(user);
         invoice.setShippingAddress(shippingAddress);
         invoice.setStatus("Mới đặt");
+        invoice.setPaymentMethod(paymentMethod);
         invoiceRepository.save(invoice);
         cart.getCartItems().forEach(item -> {
             var items = new ItemInvoice();
@@ -92,5 +94,6 @@ public class CartService {
             bookRepository.save(book);
         });
         removeCart(session);
+        return invoice;
     }
 }

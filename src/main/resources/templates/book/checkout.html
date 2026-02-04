@@ -93,6 +93,33 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Payment Method Section -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold small d-block mb-3">Phương thức thanh toán:</label>
+                                <div class="payment-options">
+                                    <label class="d-flex align-items-center p-3 border rounded mb-3"
+                                        style="cursor: pointer;">
+                                        <input class="form-check-input me-3 mt-0" type="radio" name="paymentMethod"
+                                            id="paymentCOD" value="COD" checked>
+                                        <i class="bi bi-cash-stack text-success fs-4 me-3"></i>
+                                        <div>
+                                            <strong class="d-block">Thanh toán khi nhận hàng (COD)</strong>
+                                            <div class="small text-muted">Thanh toán tiền mặt cho shipper</div>
+                                        </div>
+                                    </label>
+
+                                    <label class="d-flex align-items-center p-3 border rounded mb-3"
+                                        style="cursor: pointer;">
+                                        <input class="form-check-input me-3 mt-0" type="radio" name="paymentMethod"
+                                            id="paymentQR" value="QR">
+                                        <i class="bi bi-qr-code-scan text-primary fs-4 me-3"></i>
+                                        <div>
+                                            <strong class="d-block">Chuyển khoản QR Code</strong>
+                                            <div class="small text-muted">Quét mã để thanh toán nhanh chóng</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
 
                             <input type="hidden" name="shippingAddress" id="finalShippingAddress"
                                 th:value="${user.address}">

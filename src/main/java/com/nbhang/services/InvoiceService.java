@@ -34,4 +34,12 @@ public class InvoiceService {
         invoice.setStatus(status);
         invoiceRepository.save(invoice);
     }
+
+    @Transactional
+    public void updatePaymentProof(Long id, String proof) {
+        Invoice invoice = invoiceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+        invoice.setPaymentProof(proof);
+        invoiceRepository.save(invoice);
+    }
 }

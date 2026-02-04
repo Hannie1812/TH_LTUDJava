@@ -25,6 +25,14 @@ public class FileStorageService {
      * Store uploaded file and return the filename
      */
     public String storeFile(MultipartFile file, Long bookId) throws IOException {
+        return storeFileGeneric(file, "book", bookId);
+    }
+
+    public String storeInvoiceProof(MultipartFile file, Long invoiceId) throws IOException {
+        return storeFileGeneric(file, "invoice_proof", invoiceId);
+    }
+
+    private String storeFileGeneric(MultipartFile file, String prefix, Long id) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("Failed to store empty file");
         }
@@ -41,7 +49,9 @@ public class FileStorageService {
         }
 
         // Generate unique filename
-        String filename = generateFilename(bookId, originalFilename);
+        String extension = getFileExtension(originalFilename);
+        long timestamp = System.currentTimeMillis();
+        String filename = String.format("%s_%d_%d.%s", prefix, id, timestamp, extension);
 
         // Create upload directory if it doesn't exist
         Path uploadPath = Paths.get(uploadDir);
@@ -83,15 +93,6 @@ public class FileStorageService {
 
         String extension = getFileExtension(filename);
         return ALLOWED_EXTENSIONS.contains(extension.toLowerCase());
-    }
-
-    /**
-     * Generate unique filename for book image
-     */
-    private String generateFilename(Long bookId, String originalFilename) {
-        String extension = getFileExtension(originalFilename);
-        long timestamp = System.currentTimeMillis();
-        return String.format("book_%d_%d.%s", bookId, timestamp, extension);
     }
 
     /**

@@ -35,6 +35,12 @@ public class Invoice {
     @ToString.Exclude
     private List<ItemInvoice> itemInvoices = new ArrayList<>();
 
+    @Column(name = "payment_method")
+    private String paymentMethod;
+
+    @Column(name = "payment_proof")
+    private String paymentProof;
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

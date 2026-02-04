@@ -178,6 +178,42 @@
                         <div class="info-label">Địa chỉ giao hàng</div>
                         <div class="info-value" style="font-weight: 500;" th:text="${invoice.shippingAddress}"></div>
                     </div>
+                    <hr>
+                    <div class="mb-3">
+                        <div class="info-label">Phương thức thanh toán</div>
+                        <div class="info-value">
+                            <span th:if="${invoice.paymentMethod == 'COD'}" class="badge bg-secondary">
+                                <i class="bi bi-cash-stack me-1"></i>Thanh toán khi nhận hàng
+                            </span>
+                            <span th:if="${invoice.paymentMethod == 'QR'}" class="badge bg-primary">
+                                <i class="bi bi-qr-code-scan me-1"></i>Chuyển khoản QR
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Proof Upload Section (Only for QR) -->
+                    <div class="mb-3" th:if="${invoice.paymentMethod == 'QR'}">
+                        <div class="info-label mb-2">Ảnh minh chứng chuyển khoản</div>
+
+                        <!-- Display existing proof -->
+                        <div class="mb-3" th:if="${invoice.paymentProof != null}">
+                            <img th:src="@{'/images/books/' + ${invoice.paymentProof}}"
+                                class="img-fluid rounded border shadow-sm" alt="Payment Proof"
+                                style="max-height: 200px;">
+                        </div>
+
+                        <!-- Upload form -->
+                        <form th:action="@{/invoices/{id}/upload-proof(id=${invoice.id})}" method="post"
+                            enctype="multipart/form-data">
+                            <div class="input-group mb-2">
+                                <input type="file" class="form-control" name="file" accept="image/*" required>
+                                <button class="btn btn-outline-primary" type="submit">
+                                    <i class="bi bi-cloud-upload"></i> Tải lên
+                                </button>
+                            </div>
+                            <small class="text-muted fst-italic">Vui lòng tải lên ảnh chụp màn hình giao dịch.</small>
+                        </form>
+                    </div>
                 </div>
             </div>
 

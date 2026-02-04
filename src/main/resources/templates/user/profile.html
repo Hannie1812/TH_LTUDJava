@@ -87,12 +87,22 @@
                 <i class="bi bi-key me-1"></i>Đổi Mật Khẩu
               </button>
             </form>
+            <hr class="my-5" style="border-top: 2px solid #eee;" />
+
+            <div class="text-center">
+              <h5 class="gradient-text mb-4"><i class="bi bi-fingerprint me-2"></i>Bảo mật nâng cao</h5>
+              <button type="button" class="btn btn-outline-info w-100 shadow-sm py-2" onclick="registerWebAuthn()">
+                <i class="bi bi-person-bounding-box me-2"></i>Cài đặt FaceID / Windows Hello
+              </button>
+              <p class="text-muted small mt-2">Đăng nhập nhanh hơn mà không cần mật khẩu.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <th:block th:replace="~{layout :: footer}"></th:block>
+  <script src="/js/webauthn.js"></script>
 </body>
 
 </html>

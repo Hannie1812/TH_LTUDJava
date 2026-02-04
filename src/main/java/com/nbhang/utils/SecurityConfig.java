@@ -56,7 +56,7 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/css/**", "/js/**", "/",
                                                                 "/oauth/**", "/register", "/error",
-                                                                "/test/**", "/images/**")
+                                                                "/test/**", "/images/**", "/webauthn/**")
                                                 .permitAll()
                                                 .requestMatchers("/books/edit/**",
                                                                 "/books/add", "/books/delete")

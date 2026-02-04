@@ -42,11 +42,14 @@ public class CartController {
 
     @GetMapping("/updateCart/{id}/{quantity}")
     public String updateCart(HttpSession session,
-            @PathVariable int id,
-            @PathVariable int quantity) {
-        var cart = cartService.getCart(session);
-        cart.updateItems(id, quantity);
-        return "book/cart";
+            @PathVariable Long id,
+            @PathVariable int quantity,
+            RedirectAttributes redirectAttributes) {
+        String errorMessage = cartService.updateCartItem(session, id, quantity);
+        if (errorMessage != null) {
+            redirectAttributes.addFlashAttribute("error", errorMessage);
+        }
+        return "redirect:/cart";
     }
 
     @GetMapping("/clearCart")

@@ -38,6 +38,19 @@ public class CartService {
         session.setAttribute(CART_SESSION_KEY, cart);
     }
 
+    public String updateCartItem(@NotNull HttpSession session, Long bookId, int quantity) {
+        var cart = getCart(session);
+        var book = bookRepository.findById(bookId).orElse(null);
+        if (book == null) {
+            return "Sách không tồn tại";
+        }
+        if (quantity > book.getQuantity()) {
+            return "Số lượng tồn kho không đủ. Chỉ còn " + book.getQuantity() + " sản phẩm.";
+        }
+        cart.updateItems(bookId, quantity);
+        return null;
+    }
+
     public void removeCart(@NotNull HttpSession session) {
         session.removeAttribute(CART_SESSION_KEY);
     }

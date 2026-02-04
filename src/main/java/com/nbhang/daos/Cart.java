@@ -30,7 +30,7 @@ public class Cart {
                 bookId));
     }
 
-    public void updateItems(int bookId, int quantity) {
+    public void updateItems(Long bookId, int quantity) {
         cartItems.stream()
                 .filter(item -> Objects.equals(item
                         .getBookId(), bookId))

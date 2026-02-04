@@ -41,6 +41,16 @@ public class UserController {
     public String register(@Valid @ModelAttribute("user") User user,
             @NotNull BindingResult bindingResult,
             Model model) {
+        if (userService.findByUsername(user.getUsername()).isPresent()) {
+            bindingResult.rejectValue("username", "error.user", "Tên đăng nhập đã tồn tại");
+        }
+        if (userService.findByEmail(user.getEmail()).isPresent()) {
+            bindingResult.rejectValue("email", "error.user", "Email đã tồn tại");
+        }
+        if (userService.findByPhone(user.getPhone()).isPresent()) {
+            bindingResult.rejectValue("phone", "error.user", "Số điện thoại đã tồn tại");
+        }
+
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors()
                     .stream()
@@ -131,6 +141,16 @@ public class UserController {
             @NotNull BindingResult bindingResult,
             Model model,
             RedirectAttributes redirectAttributes) {
+        if (userService.findByUsername(user.getUsername()).isPresent()) {
+            bindingResult.rejectValue("username", "error.user", "Tên đăng nhập đã tồn tại");
+        }
+        if (userService.findByEmail(user.getEmail()).isPresent()) {
+            bindingResult.rejectValue("email", "error.user", "Email đã tồn tại");
+        }
+        if (userService.findByPhone(user.getPhone()).isPresent()) {
+            bindingResult.rejectValue("phone", "error.user", "Số điện thoại đã tồn tại");
+        }
+
         if (bindingResult.hasErrors()) {
             var errors = bindingResult.getAllErrors()
                     .stream()
@@ -164,7 +184,16 @@ public class UserController {
         User user = userService.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
         // Update editable fields
+        if (!user.getEmail().equals(email) && userService.findByEmail(email).isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Email đã tồn tại");
+            return "redirect:/admin/users/edit/" + id;
+        }
         user.setEmail(email);
+
+        if (!user.getPhone().equals(phone) && userService.findByPhone(phone).isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Số điện thoại đã tồn tại");
+            return "redirect:/admin/users/edit/" + id;
+        }
         user.setPhone(phone);
 
         // Handle roles

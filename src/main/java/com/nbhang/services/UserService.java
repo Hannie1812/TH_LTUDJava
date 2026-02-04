@@ -37,6 +37,14 @@ public class UserService implements UserDetailsService {
         return java.util.Optional.ofNullable(userRepository.findByUsername(username));
     }
 
+    public java.util.Optional<User> findByEmail(@NotNull String email) {
+        return java.util.Optional.ofNullable(userRepository.findByEmail(email));
+    }
+
+    public java.util.Optional<User> findByPhone(@NotNull String phone) {
+        return java.util.Optional.ofNullable(userRepository.findByPhone(phone));
+    }
+
     public void saveOauthUser(String email, @NotNull String username) {
         log.info("Attempting to save OAuth user with email: {}", email);
         if (userRepository.findByEmail(email) != null) {

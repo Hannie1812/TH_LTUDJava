@@ -52,6 +52,7 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
                 return http
+                                .csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/css/**", "/js/**", "/",
                                                                 "/oauth/**", "/register", "/error",
@@ -63,7 +64,8 @@ public class SecurityConfig {
                                                 .requestMatchers("/books", "/cart", "/cart/**")
                                                 .hasAnyAuthority("ADMIN", "USER")
                                                 .requestMatchers("/api/**")
-                                                .hasAnyAuthority("ADMIN", "USER")
+                                                // .hasAnyAuthority("ADMIN", "USER")
+                                                .permitAll()
                                                 .requestMatchers("/profile", "/profile/**", "/orders", "/orders/**")
                                                 .hasAnyAuthority("ADMIN", "USER")
                                                 .requestMatchers("/admin/**")
